@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">eSIM Studio</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_hero_banner">Global fiber optic connectivity hero banner</string>
+    <string name="cd_esim_qr_code">Scannable LPA eSIM activation QR code</string>
+    <string name="cd_copy_value">Copy to clipboard</string>
+    <string name="cd_close_sheet">Close profile details</string>
+    <string name="cd_clear_search">Clear search query</string>
+
+    <!-- Auth Screen -->
+    <string name="auth_headline">Virtual eSIM Cockpit</string>
+    <string name="auth_subtitle">Create custom virtual eSIM profiles, generate scannable LPA QR codes, and inspect device eUICC hardware readiness.</string>
+    <string name="auth_feature_1_title">Custom Virtual eSIM Builder</string>
+    <string name="auth_feature_1_desc">Generate Luhn-valid ICCIDs, SM-DP+ hosts, APNs, and travel data quotas.</string>
+    <string name="auth_feature_2_title">Instant LPA QR Provisioning</string>
+    <string name="auth_feature_2_desc">Export standard LPA:1$ activation codes or import existing eSIM strings.</string>
+    <string name="auth_feature_3_title">Cloud Wallet &amp; Hardware Diagnostics</string>
+    <string name="auth_feature_3_desc">Sync profiles securely across devices and check Android eUICC capabilities.</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="auth_signing_in">Signing in...</string>
+    <string name="auth_checking_session">Checking session...</string>
+    <string name="auth_cloud_sync_note">Your virtual eSIM profiles are encrypted and scoped to your Google account.</string>
+
+    <!-- Navigation -->
+    <string name="nav_wallet">My eSIMs</string>
+    <string name="nav_create">Create eSIM</string>
+    <string name="nav_device">Diagnostics</string>
+
+    <!-- Wallet Screen -->
+    <string name="wallet_title">Virtual eSIM Wallet</string>
+    <string name="wallet_subtitle">Manage active slots, data quotas &amp; LPA codes</string>
+    <string name="wallet_search_hint">Search carrier, country, or ICCID</string>
+    <string name="wallet_active_slot">ACTIVE VIRTUAL SLOT</string>
+    <string name="wallet_no_active_title">No Active eSIM Slot</string>
+    <string name="wallet_no_active_desc">Activate any profile below or create a new virtual eSIM to bring a line online.</string>
+    <string name="wallet_empty_title">Your eSIM Vault is Empty</string>
+    <string name="wallet_empty_desc">Build a custom virtual eSIM profile or load 3 curated starter travel and business lines.</string>
+    <string name="action_load_starters">Load Starter eSIMs</string>
+    <string name="action_create_esim">Create Virtual eSIM</string>
+    <string name="action_show_qr">LPA QR</string>
+    <string name="action_use_data">+500 MB</string>
+    <string name="action_top_up">+5 GB</string>
+    <string name="action_activate">Activate Slot</string>
+    <string name="action_set_standby">Set Standby</string>
+
+    <!-- Detail Sheet -->
+    <string name="detail_lpa_section">LPA Activation &amp; QR</string>
+    <string name="detail_telemetry_section">Radio &amp; Quota Controls</string>
+    <string name="detail_identifiers_section">SIM Identifiers</string>
+    <string name="detail_edit_profile">Edit Profile</string>
+    <string name="detail_delete_profile">Delete Profile</string>
+    <string name="detail_open_device_esim">Open Device SIM Settings</string>
+    <string name="detail_roaming">Data Roaming</string>
+    <string name="detail_five_g">5G Standalone Preferred</string>
+    <string name="detail_confirm_delete_title">Delete Virtual eSIM?</string>
+    <string name="detail_confirm_delete_body">This removes the virtual eSIM profile and its LPA configuration from your cloud wallet.</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_save_changes">Save Changes</string>
+
+    <!-- Create Screen -->
+    <string name="create_title">Create Virtual eSIM</string>
+    <string name="create_subtitle">Configure carrier parameters, quota, and LPA credentials</string>
+    <string name="create_mode_builder">Custom Builder</string>
+    <string name="create_mode_import">Import LPA URI</string>
+    <string name="create_import_hint">Paste LPA:1$smdp.host$ACTIVATION_CODE</string>
+    <string name="create_parse_lpa">Parse LPA String</string>
+    <string name="create_sample_lpa">Use Sample LPA</string>
+    <string name="create_regenerate_iccid">New ICCID</string>
+    <string name="create_regenerate_code">New Code</string>
+    <string name="create_submit_button">Provision Virtual eSIM</string>
+    <string name="create_activate_now">Activate immediately on creation</string>
+    <string name="create_unlimited_toggle">Unlimited data allowance</string>
+
+    <!-- Diagnostics Screen -->
+    <string name="device_title">Device &amp; eUICC</string>
+    <string name="device_subtitle">Android hardware radio state &amp; account security</string>
+    <string name="device_sandbox_badge">VIRTUAL eSIM SANDBOX + REAL HARDWARE CHECK</string>
+    <string name="device_open_settings">Launch Android eSIM Manager</string>
+    <string name="account_section_title">Signed-In Cloud Account</string>
+    <string name="action_sign_out">Sign Out</string>
+</resources>

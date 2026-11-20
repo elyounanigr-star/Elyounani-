@@ -1,0 +1,99 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global safety net: default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidVirtualEsim(data, userId) {
+      return data.userId is string &&
+             data.userId == userId &&
+             data.userId == request.auth.uid &&
+             data.label is string && data.label.size() >= 1 && data.label.size() <= 50 &&
+             data.carrierName is string && data.carrierName.size() >= 1 && data.carrierName.size() <= 40 &&
+             data.countryCode is string && data.countryCode.size() >= 2 && data.countryCode.size() <= 10 &&
+             data.countryName is string && data.countryName.size() >= 1 && data.countryName.size() <= 40 &&
+             data.planType in ['TRAVEL', 'BUSINESS', 'IOT', 'CUSTOM'] &&
+             data.status in ['ACTIVE', 'STANDBY', 'EXPIRED'] &&
+             data.iccid is string && data.iccid.size() >= 15 && data.iccid.size() <= 22 &&
+             data.iccid.matches('^[0-9]{15,22}$') &&
+             data.smdpAddress is string && data.smdpAddress.size() >= 3 && data.smdpAddress.size() <= 120 &&
+             data.activationCode is string && data.activationCode.size() >= 3 && data.activationCode.size() <= 120 &&
+             data.apn is string && data.apn.size() >= 1 && data.apn.size() <= 60 &&
+             data.mccMnc is string && data.mccMnc.size() >= 3 && data.mccMnc.size() <= 10 &&
+             data.dataLimitMb is int && data.dataLimitMb >= 0 && data.dataLimitMb <= 10485760 &&
+             data.dataUsedMb is int && data.dataUsedMb >= 0 && data.dataUsedMb <= 10485760 &&
+             data.validityDays is int && data.validityDays >= 1 && data.validityDays <= 3650 &&
+             data.roamingEnabled is bool &&
+             data.fiveGEnabled is bool &&
+             data.unlimitedData is bool &&
+             data.colorAccent in ['CYAN', 'EMERALD', 'VIOLET', 'AMBER', 'CORAL'] &&
+             data.notes is string && data.notes.size() <= 250;
+    }
+
+    match /users/{userId}/esims/{esimId} {
+      allow get: if isOwner(userId) && isValidId(esimId);
+      allow list: if isOwner(userId);
+
+      allow create: if isOwner(userId) &&
+                       isValidId(esimId) &&
+                       incoming().keys().hasAll([
+                         'userId', 'label', 'carrierName', 'countryCode', 'countryName',
+                         'planType', 'status', 'iccid', 'smdpAddress', 'activationCode',
+                         'apn', 'mccMnc', 'dataLimitMb', 'dataUsedMb', 'validityDays',
+                         'roamingEnabled', 'fiveGEnabled', 'unlimitedData', 'colorAccent',
+                         'notes', 'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'userId', 'label', 'carrierName', 'countryCode', 'countryName',
+                         'planType', 'status', 'iccid', 'smdpAddress', 'activationCode',
+                         'apn', 'mccMnc', 'dataLimitMb', 'dataUsedMb', 'validityDays',
+                         'roamingEnabled', 'fiveGEnabled', 'unlimitedData', 'colorAccent',
+                         'notes', 'createdAt', 'updatedAt'
+                       ]) &&
+                       isValidVirtualEsim(incoming(), userId) &&
+                       incoming().createdAt is timestamp && incoming().createdAt <= request.time &&
+                       incoming().updatedAt is timestamp && incoming().updatedAt <= request.time;
+
+      allow update: if isOwner(userId) &&
+                       isValidId(esimId) &&
+                       isValidVirtualEsim(incoming(), userId) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().updatedAt is timestamp && incoming().updatedAt <= request.time &&
+                       (
+                         incoming().diff(existing()).affectedKeys().hasOnly([
+                           'status', 'dataUsedMb', 'dataLimitMb', 'validityDays',
+                           'roamingEnabled', 'fiveGEnabled', 'unlimitedData', 'updatedAt'
+                         ]) ||
+                         incoming().diff(existing()).affectedKeys().hasOnly([
+                           'label', 'carrierName', 'countryCode', 'countryName',
+                           'planType', 'apn', 'mccMnc', 'colorAccent', 'notes', 'updatedAt'
+                         ])
+                       );
+
+      allow delete: if isOwner(userId) && isValidId(esimId);
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "eSIM Studio",
+  "description": "Create, configure, and manage virtual eSIM profiles with LPA QR codes, usage tracking, and device eUICC diagnostics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

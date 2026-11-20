@@ -1,0 +1,136 @@
+{
+  "entities": {
+    "VirtualEsim": {
+      "title": "VirtualEsim",
+      "description": "A user-created or imported virtual eSIM profile with LPA provisioning details, data quota, and radio preferences.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID."
+        },
+        "label": {
+          "type": "string",
+          "description": "User-facing profile nickname (1-50 chars)."
+        },
+        "carrierName": {
+          "type": "string",
+          "description": "Virtual or travel carrier name (1-40 chars)."
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "ISO country or region code (2-10 chars)."
+        },
+        "countryName": {
+          "type": "string",
+          "description": "Display country or region name (1-40 chars)."
+        },
+        "planType": {
+          "type": "string",
+          "enum": ["TRAVEL", "BUSINESS", "IOT", "CUSTOM"],
+          "description": "Category of virtual eSIM plan."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "STANDBY", "EXPIRED"],
+          "description": "Activation status of the virtual eSIM profile."
+        },
+        "iccid": {
+          "type": "string",
+          "description": "15-22 digit Integrated Circuit Card Identifier."
+        },
+        "smdpAddress": {
+          "type": "string",
+          "description": "SM-DP+ provisioning server hostname."
+        },
+        "activationCode": {
+          "type": "string",
+          "description": "LPA matching ID / activation token."
+        },
+        "apn": {
+          "type": "string",
+          "description": "Access Point Name for packet data."
+        },
+        "mccMnc": {
+          "type": "string",
+          "description": "Mobile Country Code + Mobile Network Code."
+        },
+        "dataLimitMb": {
+          "type": "integer",
+          "description": "Total data allowance in megabytes."
+        },
+        "dataUsedMb": {
+          "type": "integer",
+          "description": "Consumed data in megabytes."
+        },
+        "validityDays": {
+          "type": "integer",
+          "description": "Plan validity duration in days."
+        },
+        "roamingEnabled": {
+          "type": "boolean",
+          "description": "Whether international roaming is enabled."
+        },
+        "fiveGEnabled": {
+          "type": "boolean",
+          "description": "Whether 5G SA/NSA is preferred."
+        },
+        "unlimitedData": {
+          "type": "boolean",
+          "description": "Whether data allowance is unlimited."
+        },
+        "colorAccent": {
+          "type": "string",
+          "enum": ["CYAN", "EMERALD", "VIOLET", "AMBER", "CORAL"],
+          "description": "Card visual accent theme."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional user notes (0-250 chars)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp written via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp written via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": [
+        "userId",
+        "label",
+        "carrierName",
+        "countryCode",
+        "countryName",
+        "planType",
+        "status",
+        "iccid",
+        "smdpAddress",
+        "activationCode",
+        "apn",
+        "mccMnc",
+        "dataLimitMb",
+        "dataUsedMb",
+        "validityDays",
+        "roamingEnabled",
+        "fiveGEnabled",
+        "unlimitedData",
+        "colorAccent",
+        "notes",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/esims/{esimId}": {
+      "schema": {
+        "$ref": "#/entities/VirtualEsim"
+      },
+      "description": "User-owned collection of virtual eSIM profiles."
+    }
+  }
+}
